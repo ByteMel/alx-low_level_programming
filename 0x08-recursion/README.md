@@ -17,3 +17,5 @@ The prototypes of all your functions and the prototype of the function _putchar_
 Don’t forget to push your header file
 You are not allowed to use any kind of loops
 You are not allowed to use static variables
+
+# Examples

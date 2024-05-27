@@ -2,41 +2,73 @@
 #include <stdlib.h>
 
 /**
- * string_nconcat - concatenates two strings with part of another
- * @s1: first string
- * @s2: second string
- * @n: number of bytes of s2 to concatenate to s1
- *
- * Return: pointer to newly allocated space
+ *_strlen - Returns the length of a string
+ *@s: The string being used
+ *Return: Returns the length of the string
+ */
+
+int _strlen(char *s)
+{
+	unsigned int len = 0;
+	int i;
+
+	for (i = 0; *(s + i) != '\0'; i++)
+		len += sizeof(char);
+
+	return (len);
+}
+
+/**
+ *_memcpy - Copies memory Area
+ *@dest: Destination
+ *@src: Source
+ *@n: Number of Bytes
+ *Return: dets(Destination)
+ */
+
+char *_memcpy(char *dest, char *src, unsigned int n)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		dest[i] = src[i];
+
+	return (dest);
+}
+
+/**
+ *string_nconcat - Concatenates two strings
+ *@s1: The first string
+ *@s2: The second string
+ *@n: The estimated length of s2
+ *Return: A pointer to the allocated space of the string
  */
 
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	char *string;
-	unsigned int i, size = n;
+	char *conc;
+	unsigned int len1, len2;
 
 	if (s1 == NULL)
 		s1 = "";
 	if (s2 == NULL)
 		s2 = "";
 
-	for (i = 0; *(s1 + i); i++)
-		size++;
+	len1 = _strlen(s1);
+	len2 = _strlen(s2);
 
-	string = malloc(sizeof(char) * (size + 1));
+	if (n >= len2)
+		n = len2;
 
-	if (string == NULL)
+	conc = malloc(len1 + n + 1);
+
+	if (conc == NULL)
 		return (NULL);
 
-	size = 0;
+	_memcpy(conc, s1, len1);
+	_memcpy(conc + len1, s2, n);
 
-	for (i = 0; *(s1 + i); i++)
-		string[size++] = *(s1 + i);
+	conc[len1 + n] = '\0';
 
-	for (i = 0; *(s2 + i) && i < n; i++)
-		string[size++] = *(s2 + i);
-
-	string[size] = '\0';
-
-	return (string);
+	return (conc);
 }

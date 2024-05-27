@@ -3,16 +3,23 @@
 #include <ctype.h>
 
 /**
- * main - adds positive integers and prints the result
- * @argc: number of arguments
- * @argv: array of arguments
- *
- * Return: 1 on less that 2 args, 0 otherwise
+ *main -  multiplies two numbers.
+ *@argc: The number of attributes
+ *@argv: The array of arguments
+ *Return: 0 if successful, 1 no arguments
  */
 
 int main(int argc, char *argv[])
 {
-	int i = 0, j = 0, sum = 0;
+	int i, j;
+	int sum;
+
+	if (argc <= 1)
+	{
+		printf("0\n");
+		return (0);
+	}
+
 
 	for (i = 1; i < argc; i++)
 	{
@@ -24,8 +31,10 @@ int main(int argc, char *argv[])
 				return (1);
 			}
 		}
+
 		sum += atoi(argv[i]);
 	}
+
 	printf("%d\n", sum);
 
 	return (0);

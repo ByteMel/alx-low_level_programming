@@ -1,12 +1,16 @@
-#include <stdio.h>
+#include<stdio.h>
 
 /**
- * hare - Prints a string before the
- *        main function is executed.
+ * myStartFun - Apply the constructor attribute to myStartupFun() so that it
+ *   is executed before main()
  */
+void myStartFun(void) __attribute__ ((constructor));
 
-void hare(void)
+/**
+ * myStartFun - implementation of myStartupFun
+ */
+void myStartFun(void)
 {
-	printf("You're beat! and yet, you must allow,\n"
-	       "I bore my house upon my back!\n");
+	printf("You're beat! and yet, you must allow,\n");
+	printf("I bore my house upon my back!\n");
 }

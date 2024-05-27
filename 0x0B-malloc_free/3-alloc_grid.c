@@ -2,37 +2,38 @@
 #include <stdlib.h>
 
 /**
- * alloc_grid - returns a pointer to a two dimensional array of integers
- * @width: the width of the array
- * @height: the height of the array
- *
- * Return: a pointer to the two dimensional array
+ *alloc_grid - returns a pointer to a 2 dimensional array of integers
+ *@width: The Width
+ *@height: The height
+ *Return:  a pointer to a 2 dimensional array of integers.
  */
 
 int **alloc_grid(int width, int height)
 {
-	int **array_2d, cols, rows;
+	int **grid;
+	int i, j;
 
 	if (width <= 0 || height <= 0)
 		return (NULL);
 
-	array_2d = malloc(sizeof(int *) * height);
+	grid = malloc(height * sizeof(int *));
 
-	if (array_2d == NULL)
+	if (grid == NULL)
 		return (NULL);
 
-	for (rows = 0; rows < height; rows++)
+	for (i = 0; i < height; i++)
 	{
-		array_2d[rows] = malloc(sizeof(int) * width);
-
-		if (array_2d[rows] == NULL)
+		grid[i] = malloc(width * sizeof(int));
+		if (grid[i] == NULL)
 		{
-			for (cols = 0; cols < rows; cols++)
-				free(array_2d[cols]);
-			free(array_2d);
+			for (j = 0; j < i; j++)
+				free(grid[j]);
+
+			free(grid);
 			return (NULL);
 		}
 	}
 
-	return (array_2d);
+	return (grid);
+
 }

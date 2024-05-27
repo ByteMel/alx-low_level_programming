@@ -1,18 +1,14 @@
 #include <stdio.h>
-#define UNUSED(unused_param) (void)(unused_param)
 
 /**
- * main - prints the name of the program
- * @argc: number of arguments
- * @argv: array of arguments
- *
- * Return: Always 0 (success)
+ *main - Prints the name of the program
+ *@argc: The number of attributes
+ *@argv: The array of arguments
+ *Return: Always 0.
  */
 
-int main(int argc, char *argv[])
+int main(int __attribute__((unused)) argc, char *argv[])
 {
-	UNUSED(argc);
-
 	printf("%s\n", argv[0]);
 
 	return (0);

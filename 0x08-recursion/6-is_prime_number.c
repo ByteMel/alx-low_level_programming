@@ -2,8 +2,8 @@
 
 /**
  * divisor - returns 1 if n is a divisor of m
- * @base: The base number
- * @div: The divisor
+ * @base: base number
+ * @div: divisor
  *
  * Return: 1 if base is a divisor of div, 0 otherwise
  */
@@ -22,7 +22,7 @@ int divisor(int base, int div)
 
 /**
  * is_prime_number - checks if a number is a prime number
- * @n: The number to check
+ * @n: The number
  *
  * Return: 1 if n is a prime number, 0 otherwise
  */

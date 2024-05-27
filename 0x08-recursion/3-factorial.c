@@ -1,10 +1,9 @@
 #include "main.h"
 
 /**
- * factorial - returns the factorial of a given number
- * @n: The number to get the factorial of
- *
- * Return: The factorial of the number
+ *factorial - returns the factorial of a given number
+ *@n: The number
+ *Return: The factorial of the number
  */
 
 int factorial(int n)

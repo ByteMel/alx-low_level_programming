@@ -1,9 +1,8 @@
 #include <stdio.h>
 
 /**
- * main - prints the name of the file, followed by a new line
- *
- * Return: Always 0 (Success), 1 (Failure)
+ *main - Prints the file name using a predefined macro
+ *Return: 0 when successfull
  */
 
 int main(void)

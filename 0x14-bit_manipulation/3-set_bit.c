@@ -1,26 +1,16 @@
 #include "main.h"
 
 /**
- * set_bit - sets value of a bit at given index to 1
- * @index: index
- * @n: address of the number
- * Return: 1 (success) or -1(failed)
+ * set_bit - Sets the value of a bit to 1 at a given index
+ * @n: The number to set the bit from
+ * @index: The index of the bit to set
+ * Return: 1 if it worked, or -1 if an error occured
  */
 
 int set_bit(unsigned long int *n, unsigned int index)
 {
-	unsigned int i;
-	int new, addNum = 1;
-
-	if (index > 32)
+	if (index > 63)
 		return (-1);
-	new = *n >> index;
-
-	if ((new & 1) == 0)
-	{
-		for (i = 0; i < index; i++)
-			addNum *= 2;
-	}
-	*n += addNum;
+	*n |= 1 << index;
 	return (1);
 }

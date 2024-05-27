@@ -1,52 +1,110 @@
 #include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+#define BUFFER_SIZE 1024
 
 /**
- * main- copies conent of one file to another
- * @argc: argument count
- * @argv: argument vector
- * Return: 0
+ * open_file - opens a file
+ * @filename: name of the file
+ * @flags: flags of the file
+ * @mode: mode of the file
+ *
+ * Return: file descriptor
  */
 
-int main(int argc, char **argv)
+int open_file(const char *filename, int flags, mode_t mode)
 {
-	int before, after;
-	char buffer[1024];
-	ssize_t id;
+	int fd;
 
-	if (argc != 3)
+	fd = open(filename, flags, mode);
+	return (fd);
+}
+
+/**
+ * close_file - closes a file
+ * @fd: file descriptor
+ * Return: 0 on success, -1 on failure
+ */
+
+int close_file(int fd)
+{
+	int res;
+
+	res = close(fd);
+	return (res);
+}
+
+/**
+ * copy_file - copies a file
+ * @src: source file
+ * @dest: destination file
+ * Return: 0 on success, -1 on failure
+ */
+
+int copy_file(const char *src, const char *dest)
+{
+	int fd_src, fd_dest;
+	ssize_t res;
+	char buffer[BUFFER_SIZE];
+
+	fd_src = open_file(src, O_RDONLY, 0);
+	if (fd_src == -1)
 	{
-		dprintf(STDERR_FILENO, "Usage: %s file from file_to\n", argv[0]);
-		exit(97);
-	}
-	before = open(argv[1], O_RDONLY);
-	if (before < 0)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		dprintf(STDERR_FILENO, "Error: Can't read from %s\n", src);
 		exit(98);
 	}
-	after = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
-	if (after < 0)
+	fd_dest = open_file(dest, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	if (fd_dest == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", argv[2]);
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest);
 		exit(99);
 	}
-	while ((id = read(before, buffer, 1024)) > 0)
+	while ((res = read(fd_src, buffer, BUFFER_SIZE)) > 0)
 	{
-		if (write(after, buffer, id) != id)
+		if (write(fd_dest, buffer, res) == -1)
 		{
-			dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", argv[2]);
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest);
 			exit(99);
 		}
 	}
-	if (id < 0)
+	if (res == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src);
 		exit(98);
 	}
-	if (close(after) < 0)
+	if (close_file(fd_src) == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: CAn't close fd %d\n", after);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_src);
+		exit(100);
+	}
+	if (close_file(fd_dest) == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd_dest);
 		exit(100);
 	}
 	return (0);
+}
+
+/**
+ * main - check the code
+ * @argc: number of arguments
+ * @argv: array of arguments
+ *
+ * Return: Always 0.
+ */
+
+int main(int argc, char *argv[])
+{
+	int result;
+
+	if (argc != 3)
+	{
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+		exit(97);
+	}
+
+	result = copy_file(argv[1], argv[2]);
+
+	return (result);
 }
